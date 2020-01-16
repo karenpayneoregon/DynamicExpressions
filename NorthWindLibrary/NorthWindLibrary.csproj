@@ -56,6 +56,7 @@
     <Compile Include="Helpers\CustomersDynamicFiltering.cs" />
     <Compile Include="Helpers\ExpressionPredicateBuilder.cs" />
     <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Helpers\GenericSorter.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\ContactType.cs" />

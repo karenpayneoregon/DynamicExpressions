@@ -36,6 +36,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.CountryComboBox = new System.Windows.Forms.ComboBox();
             this.CustomerByCountryButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -128,11 +129,22 @@
             this.CustomerByCountryButton.UseVisualStyleBackColor = true;
             this.CustomerByCountryButton.Click += new System.EventHandler(this.CustomerByCountryButton_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(32, 212);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(504, 254);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -156,6 +168,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox CountryComboBox;
         private System.Windows.Forms.Button CustomerByCountryButton;
+        private System.Windows.Forms.Button button1;
     }
 }
 

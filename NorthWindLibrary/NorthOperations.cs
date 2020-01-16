@@ -60,7 +60,18 @@ namespace NorthWindLibrary
             }
         }
 
-        public void ProjectTest()
+        public void SortTest()
+        {
+            
+            using (var context = new NorthWindAzureContext())
+            {
+                var results = context.Customers.ToList().Sort("CompanyName DESC");
+                Console.WriteLine();
+            }
+
+        }
+
+        public void ProjectionTest()
         {
             using (var context = new NorthWindAzureContext())
             {
