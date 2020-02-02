@@ -25,11 +25,14 @@ namespace NorthWindLibrary
         public async Task<Customer> GetCustomers(string propertyName, string value)
         {           
 
-            var dn = DynamicQueryWithExpressionTrees(propertyName, value);
+            Func<Customer, bool> query = DynamicQueryWithExpressionTrees(propertyName, value);
+
             using (var context = new NorthWindAzureContext())
             {
                 return await Task.Run(() => context.Customers
-                    .Include(cust => cust.Country).Where(dn).Select(customer => customer).FirstOrDefault());
+                    .Include(customer => customer.Country)
+                    .Where(query).Select(customer => customer)
+                    .FirstOrDefault());
             }
 
         }
@@ -37,11 +40,13 @@ namespace NorthWindLibrary
         public async Task<List<Customer>> GetCustomersList(string propertyName, string value)
         {
 
-            var dn = DynamicQueryWithExpressionTrees(propertyName, value);
+            Func<Customer, bool> query = DynamicQueryWithExpressionTrees(propertyName, value);
             using (var context = new NorthWindAzureContext())
             {
                 return await Task.Run(() => context.Customers
-                    .Include(cust => cust.Country).Where(dn).Select(customer => customer).ToList());
+                    .Include(cust => cust.Country)
+                    .Where(query).Select(customer => customer)
+                    .ToList());
             }
 
         }
@@ -95,10 +100,15 @@ namespace NorthWindLibrary
         public List<Customer> ExtensionCustomersContainsIdentifiersTest()
         {
             var ids = new List<int> { 1, 2, 3 };
+
             using (var context = new NorthWindAzureContext())
             {
-                return context.Customers.Include(c => c.Contact).WithId(cust => cust.CustomerIdentifier, ids).ToList();
+                return context.Customers
+                    .Include(customer => customer.Contact)
+                    .WithId(cust => cust.CustomerIdentifier, ids)
+                    .ToList();
             }
+
         }
 
         public List<Customer> CompleteCustomersTest()
@@ -114,6 +124,7 @@ namespace NorthWindLibrary
 
             using (var context = new NorthWindAzureContext())
             {
+
                 return await Task.Run(() => 
                     context.Countries.Select(country => new CountryItem()
                     {
@@ -123,7 +134,6 @@ namespace NorthWindLibrary
             }
 
         }
-
 
     }
 }
