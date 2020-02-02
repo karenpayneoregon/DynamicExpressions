@@ -115,7 +115,8 @@ namespace NorthWindFrontEnd
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _northOperations.SortTest();
+            _northOperations.CustomerContactsTypes();
+            //_northOperations.SortTest();
         }
     }
 }

@@ -2,26 +2,57 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using NorthWindLibrary.Classes;
 using NorthWindLibrary.Helpers;
 using NorthWindLibrary.Models;
+using NorthWindLibrary.PartialClasses;
 using static NorthWindLibrary.Helpers.CustomersDynamicFiltering;
 
 namespace NorthWindLibrary
 {
     public class NorthOperations
     {
+        /// <summary>
+        /// Get tables, columns, column types and primary keys
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<TableInformation>> DatabaseTableInformation()
+        {
+
+            var entityCrawler = new EntityCrawler()
+            {
+                AssembleName = Assembly.GetExecutingAssembly().GetName().Name,
+                TypeName = "NorthWindAzureContext"
+            };
+
+            await Task.Run(() => entityCrawler.GetInformation());
+            
+
+            return entityCrawler.TableInformation;
+
+        }
+        /// <summary>
+        /// Get all customers without children
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Customer>> GetAllCustomers()
         {
-            
+
             using (var context = new NorthWindAzureContext())
             {
                 return await Task.Run(() => context.Customers.Select(customer => customer).ToList()); 
             }
 
         }
+        /// <summary>
+        /// Get customer by dynamic property and value, include country
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public async Task<Customer> GetCustomers(string propertyName, string value)
         {           
 
@@ -36,7 +67,12 @@ namespace NorthWindLibrary
             }
 
         }
-
+        /// <summary>
+        /// Get customers by dynamic property and value
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public async Task<List<Customer>> GetCustomersList(string propertyName, string value)
         {
 
@@ -44,19 +80,25 @@ namespace NorthWindLibrary
             using (var context = new NorthWindAzureContext())
             {
                 return await Task.Run(() => context.Customers
-                    .Include(cust => cust.Country)
+                    .Include(customer => customer.Country)
                     .Where(query).Select(customer => customer)
                     .ToList());
             }
 
         }
-
+        /// <summary>
+        /// Get subset of customers focusing on primary keys
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<CustomerNameIdentifier>> CustomerNameWithIdentifiers()
         {
             using (var context = new NorthWindAzureContext())
             {
+                
                 return await Task.Run(() =>
-                    context.Customers.Include(cust => cust.Country).Select(customer => new CustomerNameIdentifier()
+                    context.Customers
+                        .Include(customer => customer.Country)
+                        .Select(customer => new CustomerNameIdentifier()
                     {
                         CustomerIdentifier = customer.CustomerIdentifier,
                         CompanyName = customer.CompanyName,
@@ -64,10 +106,11 @@ namespace NorthWindLibrary
                     }).ToList());
             }
         }
-
+        /// <summary>
+        /// Dynamic sort by property name and order ascending or descending 
+        /// </summary>
         public void SortTest()
         {
-            
             using (var context = new NorthWindAzureContext())
             {
                 var results = context.Customers.ToList().Sort("CompanyName DESC");
@@ -75,16 +118,21 @@ namespace NorthWindLibrary
             }
 
         }
-
-        public void ProjectionTest()
+        /// <summary>
+        /// Example for projection of a specific model
+        /// </summary>
+        /// <returns></returns>
+        public List<CustomerCountryListItem> ProjectionTest()
         {
             using (var context = new NorthWindAzureContext())
             {
-                var results = context.Customers.Select(Customer.Projection).ToList();
-                Console.WriteLine();
+                List<CustomerCountryListItem> results = context.Customers.Select(Customer.Projection).ToList();
+                return results;
             }
         }
-
+        /// <summary>
+        /// Example for building a where predicate with an expression
+        /// </summary>
         public void BuilderTest()
         {
             var test = Builder.Build<Customer, string>(
@@ -96,7 +144,11 @@ namespace NorthWindLibrary
                 Console.WriteLine();
             }
         }
-
+        /// <summary>
+        /// Using expressions to build a predicate for obtaining data
+        /// by multiple key values
+        /// </summary>
+        /// <returns></returns>
         public List<Customer> ExtensionCustomersContainsIdentifiersTest()
         {
             var ids = new List<int> { 1, 2, 3 };
@@ -105,12 +157,29 @@ namespace NorthWindLibrary
             {
                 return context.Customers
                     .Include(customer => customer.Contact)
-                    .WithId(cust => cust.CustomerIdentifier, ids)
+                    .WithIdendifier(cust => cust.CustomerIdentifier, ids)
                     .ToList();
             }
 
         }
+        /// <summary>
+        /// Using expressions to build a predicate for obtaining data
+        /// by multiple key values
+        /// </summary>
+        /// <returns></returns>
+        public void CustomerContactsTypes()
+        {
+            var ids = new List<int?> { 1, 2, 3 };
+            using (var context = new NorthWindAzureContext())
+            {
+                var results = context.Customers
+                    .Include(c => c.ContactType)
+                    .WithContactTypes(item => item.ContactTypeIdentifier, ids)
+                    .ToList();
 
+                Console.WriteLine();
+            }
+        }
         public List<Customer> CompleteCustomersTest()
         {
             using (var context = new NorthWindAzureContext())
@@ -131,6 +200,19 @@ namespace NorthWindLibrary
                         CountryIdentifier = country.CountryIdentifier,
                         Name = country.Name
                     }).ToList());
+            }
+
+        }
+
+        public async Task<List<CategoryCheckedListBox>> GetAllCategories()
+        {
+            using (var context = new NorthWindAzureContext())
+            {
+                return await Task.Run(() => context.Categories.Select(category => new CategoryCheckedListBox()
+                {
+                    CategoryID = category.CategoryID,
+                    CategoryName = category.CategoryName
+                }).ToList());
             }
 
         }

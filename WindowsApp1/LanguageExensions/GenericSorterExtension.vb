@@ -40,8 +40,8 @@ Public Module GenericSorterExtension
         ''' </summary>
         DESC
     End Enum
-    <System.Runtime.CompilerServices.Extension> _
-    Public Function Order(Of T)( source As IQueryable(Of T), ByVal propertyNames() As String,  sortOrder As SortOrderEnum) As IOrderedQueryable(Of T)
+    <System.Runtime.CompilerServices.Extension>
+    Public Function Order(Of T)(source As IQueryable(Of T), ByVal propertyNames() As String, sortOrder As SortOrderEnum) As IOrderedQueryable(Of T)
 
         If propertyNames.Length = 0 Then
             Throw New InvalidOperationException()
@@ -52,11 +52,11 @@ Public Module GenericSorterExtension
 
         Dim sort = Expression.Lambda([property], param)
 
-        Dim orderByCall As MethodCallExpression = Expression.Call(GetType(Queryable), "OrderBy" & 
-            (If(sortOrder = SortOrderEnum.DESC, "Descending", 
-                String.Empty)), 
-                    { GetType(T), [property].Type }, 
-                        source.Expression, 
+        Dim orderByCall As MethodCallExpression = Expression.Call(GetType(Queryable), "OrderBy" &
+            (If(sortOrder = SortOrderEnum.DESC, "Descending",
+                String.Empty)),
+                    {GetType(T), [property].Type},
+                        source.Expression,
                                         Expression.Quote(sort))
 
         If propertyNames.Length > 1 Then
@@ -67,11 +67,11 @@ Public Module GenericSorterExtension
 
                 sort = Expression.Lambda([property], param)
 
-                orderByCall = Expression.Call(GetType(Queryable), "ThenBy" & 
-                    (If(sortOrder = SortOrderEnum.DESC, "Descending", 
-                        String.Empty)), 
-                            { GetType(T), [property].Type }, 
-                                orderByCall, 
+                orderByCall = Expression.Call(GetType(Queryable), "ThenBy" &
+                    (If(sortOrder = SortOrderEnum.DESC, "Descending",
+                        String.Empty)),
+                            {GetType(T), [property].Type},
+                                orderByCall,
                                               Expression.Quote(sort))
 
             Next index

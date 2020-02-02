@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NorthWindFrontEnd
+namespace CustomersByCountry
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace NorthWindFrontEnd
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CrawlerForm());
+            Application.Run(new Form1());
         }
     }
 }

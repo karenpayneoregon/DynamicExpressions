@@ -54,9 +54,13 @@
     <Compile Include="Classes\CustomerNameIdentifier.cs" />
     <Compile Include="Helpers\Builder.cs" />
     <Compile Include="Helpers\CustomersDynamicFiltering.cs" />
+    <Compile Include="Helpers\EntityColumn.cs" />
+    <Compile Include="Helpers\EntityCrawler.cs" />
     <Compile Include="Helpers\ExpressionPredicateBuilder.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\GenericSorter.cs" />
+    <Compile Include="Helpers\NorthCrawler.cs" />
+    <Compile Include="Helpers\TableInformation.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\ContactType.cs" />
@@ -68,7 +72,9 @@
     <Compile Include="Models\Order_Detail.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="NorthOperations.cs" />
+    <Compile Include="PartialClasses\CategoryCheckedListBox.cs" />
     <Compile Include="PartialClasses\Customer.cs" />
+    <Compile Include="PartialClasses\ProductCheckedListBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Shipper.cs" />
     <Compile Include="Models\Supplier.cs" />

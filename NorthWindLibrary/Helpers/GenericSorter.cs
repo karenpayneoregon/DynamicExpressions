@@ -9,11 +9,10 @@ namespace NorthWindLibrary.Helpers
 {
     public static class GenericSorterExtension
     {
-        public static List<T> Sort<T>(this List<T> list, string sortBy_sortDirection)
+        public static List<T> Sort<T>(this List<T> list, string sortBySortDirection)
         {
-            string[] sortProperties = sortBy_sortDirection.Split(' ');
+            string[] sortProperties = sortBySortDirection.Split(' ');
 
-            //if(sortProperties.l > 2)
             var param = Expression.Parameter(typeof(T), "item");
 
             var sortExpression = Expression.Lambda<Func<T, object>>
@@ -28,6 +27,28 @@ namespace NorthWindLibrary.Helpers
                     list = list.AsQueryable<T>().OrderByDescending<T, object>(sortExpression).ToList();
                     break;
             }
+            return list;
+        }
+        /// <summary>
+        /// Sort by property name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="propertyName">Property name to sort by</param>
+        /// <param name="ascending">true for ascending, false descending</param>
+        /// <returns></returns>
+        public static List<T> Sort<T>(this List<T> list,string propertyName, bool @ascending)
+        {
+
+            var param = Expression.Parameter(typeof(T), "item");
+
+            var sortExpression = Expression.Lambda<Func<T, object>>
+                (Expression.Convert(Expression.Property(param, propertyName), typeof(object)), param);
+
+            list = @ascending ? 
+                list.AsQueryable<T>().OrderBy<T, object>(sortExpression).ToList() : 
+                list.AsQueryable<T>().OrderByDescending<T, object>(sortExpression).ToList();
+
             return list;
         }
     }

@@ -13,7 +13,7 @@ namespace NorthWindLibrary.Helpers
     public static class Extensions
     {
 
-        public static IQueryable<T> WithId<T>(this IQueryable<T> entities,Expression<Func<T, int>> propertySelector, ICollection<int> ids)
+        public static IQueryable<T> WithIdendifier<T>(this IQueryable<T> entities,Expression<Func<T, int>> propertySelector, ICollection<int> ids)
         {
             var property = (PropertyInfo)((MemberExpression)propertySelector.Body).Member;
 
@@ -23,6 +23,21 @@ namespace NorthWindLibrary.Helpers
                 Expression.Call(
                     Expression.Constant(ids),
                     typeof(ICollection<int>).GetMethod("Contains"),
+                    Expression.Property(parameter, property)),
+                parameter);
+
+            return entities.Where(expression);
+        }
+        public static IQueryable<T> WithContactTypes<T>(this IQueryable<T> entities, Expression<Func<T, int?>> propertySelector, ICollection<int?> ids)
+        {
+            var property = (PropertyInfo)((MemberExpression)propertySelector.Body).Member;
+
+            ParameterExpression parameter = Expression.Parameter(typeof(T));
+
+            var expression = Expression.Lambda<Func<T, bool>>(
+                Expression.Call(
+                    Expression.Constant(ids),
+                    typeof(ICollection<int?>).GetMethod("Contains"),
                     Expression.Property(parameter, property)),
                 parameter);
 
@@ -68,3 +83,4 @@ namespace NorthWindLibrary.Helpers
         }
     }
 }
+
