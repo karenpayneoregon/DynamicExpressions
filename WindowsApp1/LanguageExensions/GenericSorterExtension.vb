@@ -30,4 +30,55 @@ Public Module GenericSorterExtension
         Return list
 
     End Function
+    Public Enum SortOrderEnum
+        ''' <summary>
+        ''' The returned list will be ordered in acending order
+        ''' </summary>
+        ASC
+        ''' <summary>
+        ''' The returned list wil lbe orderded in descending order
+        ''' </summary>
+        DESC
+    End Enum
+    <System.Runtime.CompilerServices.Extension> _
+    Public Function Order(Of T)( source As IQueryable(Of T), ByVal propertyNames() As String,  sortOrder As SortOrderEnum) As IOrderedQueryable(Of T)
+
+        If propertyNames.Length = 0 Then
+            Throw New InvalidOperationException()
+        End If
+
+        Dim param = Expression.Parameter(GetType(T), String.Empty)
+        Dim [property] = Expression.PropertyOrField(param, propertyNames(0))
+
+        Dim sort = Expression.Lambda([property], param)
+
+        Dim orderByCall As MethodCallExpression = Expression.Call(GetType(Queryable), "OrderBy" & 
+            (If(sortOrder = SortOrderEnum.DESC, "Descending", 
+                String.Empty)), 
+                    { GetType(T), [property].Type }, 
+                        source.Expression, 
+                                        Expression.Quote(sort))
+
+        If propertyNames.Length > 1 Then
+            For index As Integer = 1 To propertyNames.Length - 1
+                Dim item = propertyNames(index)
+                param = Expression.Parameter(GetType(T), String.Empty)
+                [property] = Expression.PropertyOrField(param, item)
+
+                sort = Expression.Lambda([property], param)
+
+                orderByCall = Expression.Call(GetType(Queryable), "ThenBy" & 
+                    (If(sortOrder = SortOrderEnum.DESC, "Descending", 
+                        String.Empty)), 
+                            { GetType(T), [property].Type }, 
+                                orderByCall, 
+                                              Expression.Quote(sort))
+
+            Next index
+        End If
+
+
+        Return CType(source.Provider.CreateQuery(Of T)(orderByCall), IOrderedQueryable(Of T))
+
+    End Function
 End Module
