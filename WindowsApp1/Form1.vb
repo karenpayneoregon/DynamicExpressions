@@ -1,30 +1,36 @@
-﻿Imports NorthWindLibrary
-Imports NorthWindLibrary.Models
+﻿
+Imports System.Reflection
+Imports Equin.ApplicationFramework
 
 Public Class Form1
-    Public Sub SortTest()
+    Private CustomerView As BindingListView(Of CustomerItem)
+    Private operations As New Operations
 
-        Using context = New NorthWindAzureContext()
-            Dim sortCompanyNameAscending = context.Customers.ToList().Sort("CompanyName", SortDirection.Descending)
-            Dim sortContactNameDescending = (From cust In context.Customers).ToList().Sort("ContactName", SortDirection.Descending)
-            Console.WriteLine()
-        End Using
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        SortTest()
+    Private Sub Button2_Click(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Using context = New NorthWindAzureContext()
-            Dim results As List(Of Customer) = context.Customers.
-                    AsQueryable().
-                    Order(New String(){"CompanyName","ContactName"}, SortOrderEnum.ASC).
-                    ToList()
+    Private Async Sub LoadCustomersButton_Click(sender As Object, e As EventArgs) Handles LoadCustomersButton.Click
+        Dim customers As List(Of CustomerItem)
+        Dim PropertyName = ColumnNameListBox.Text.Replace(" "c, "")
 
-            Console.WriteLine()
-        End Using
+        If Not DescendingOrderCheckBox.Checked Then
+            customers = Await operations.CustomerSort1(PropertyName)
+        Else
+            customers = Await operations.CustomerSort1(PropertyName, SortDirection.Descending)
+        End If
+
+        CustomerView = New BindingListView(Of CustomerItem)(customers)
+
+        DataGridView1.DataSource = CustomerView
+
+    End Sub
+
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        ColumnNameListBox.DataSource = operations.CustomerItemPropertyNames()
     End Sub
 End Class

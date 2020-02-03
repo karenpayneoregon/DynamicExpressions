@@ -113,7 +113,7 @@ namespace NorthWindLibrary
         {
             using (var context = new NorthWindAzureContext())
             {
-                var results = context.Customers.ToList().Sort("CompanyName DESC");
+                var results = context.Customers.ToList().Sort1("CompanyName DESC");
                 Console.WriteLine();
             }
 

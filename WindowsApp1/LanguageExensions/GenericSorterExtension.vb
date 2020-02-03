@@ -32,49 +32,44 @@ Public Module GenericSorterExtension
     End Function
     Public Enum SortOrderEnum
         ''' <summary>
-        ''' The returned list will be ordered in acending order
+        ''' The returned list will be ordered in ascending order
         ''' </summary>
         ASC
         ''' <summary>
-        ''' The returned list wil lbe orderded in descending order
+        ''' The returned list will be order in descending order
         ''' </summary>
         DESC
     End Enum
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function Order(Of T)(source As IQueryable(Of T), ByVal propertyNames() As String, sortOrder As SortOrderEnum) As IOrderedQueryable(Of T)
 
         If propertyNames.Length = 0 Then
             Throw New InvalidOperationException()
         End If
 
-        Dim param = Expression.Parameter(GetType(T), String.Empty)
-        Dim [property] = Expression.PropertyOrField(param, propertyNames(0))
+        Dim paramExpression = Expression.Parameter(GetType(T), String.Empty)
+        Dim memberExpression = Expression.PropertyOrField(paramExpression, propertyNames(0))
 
-        Dim sort = Expression.Lambda([property], param)
+        Dim sort = Expression.Lambda(memberExpression, paramExpression)
 
         Dim orderByCall As MethodCallExpression = Expression.Call(GetType(Queryable), "OrderBy" &
-            (If(sortOrder = SortOrderEnum.DESC, "Descending",
-                String.Empty)),
-                    {GetType(T), [property].Type},
-                        source.Expression,
-                                        Expression.Quote(sort))
+            (If(sortOrder = SortOrderEnum.DESC, "Descending", String.Empty)), {GetType(T), memberExpression.Type},
+                source.Expression, Expression.Quote(sort))
 
         If propertyNames.Length > 1 Then
+
             For index As Integer = 1 To propertyNames.Length - 1
                 Dim item = propertyNames(index)
-                param = Expression.Parameter(GetType(T), String.Empty)
-                [property] = Expression.PropertyOrField(param, item)
+                paramExpression = Expression.Parameter(GetType(T), String.Empty)
+                memberExpression = Expression.PropertyOrField(paramExpression, item)
 
-                sort = Expression.Lambda([property], param)
+                sort = Expression.Lambda(memberExpression, paramExpression)
 
                 orderByCall = Expression.Call(GetType(Queryable), "ThenBy" &
-                    (If(sortOrder = SortOrderEnum.DESC, "Descending",
-                        String.Empty)),
-                            {GetType(T), [property].Type},
-                                orderByCall,
-                                              Expression.Quote(sort))
+                    (If(sortOrder = SortOrderEnum.DESC, "Descending", String.Empty)),
+                        {GetType(T), memberExpression.Type}, orderByCall, Expression.Quote(sort))
 
-            Next index
+            Next
         End If
 
 

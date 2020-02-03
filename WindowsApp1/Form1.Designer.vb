@@ -22,41 +22,82 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.SuspendLayout
+        Me.LoadCustomersButton = New System.Windows.Forms.Button()
+        Me.ColumnNameListBox = New System.Windows.Forms.ListBox()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.DescendingOrderCheckBox = New System.Windows.Forms.CheckBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
+        Me.SuspendLayout()
         '
-        'Button1
+        'LoadCustomersButton
         '
-        Me.Button1.Location = New System.Drawing.Point(14, 19)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = true
+        Me.LoadCustomersButton.Location = New System.Drawing.Point(12, 229)
+        Me.LoadCustomersButton.Name = "LoadCustomersButton"
+        Me.LoadCustomersButton.Size = New System.Drawing.Size(180, 23)
+        Me.LoadCustomersButton.TabIndex = 2
+        Me.LoadCustomersButton.Text = "Load Customers"
+        Me.LoadCustomersButton.UseVisualStyleBackColor = True
         '
-        'Button2
+        'ColumnNameListBox
         '
-        Me.Button2.Location = New System.Drawing.Point(12, 48)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 1
-        Me.Button2.Text = "Button2"
-        Me.Button2.UseVisualStyleBackColor = true
+        Me.ColumnNameListBox.FormattingEnabled = True
+        Me.ColumnNameListBox.Location = New System.Drawing.Point(6, 27)
+        Me.ColumnNameListBox.Name = "ColumnNameListBox"
+        Me.ColumnNameListBox.Size = New System.Drawing.Size(155, 121)
+        Me.ColumnNameListBox.TabIndex = 3
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Location = New System.Drawing.Point(215, 28)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.Size = New System.Drawing.Size(552, 224)
+        Me.DataGridView1.TabIndex = 4
+        '
+        'DescendingOrderCheckBox
+        '
+        Me.DescendingOrderCheckBox.AutoSize = True
+        Me.DescendingOrderCheckBox.Location = New System.Drawing.Point(6, 172)
+        Me.DescendingOrderCheckBox.Name = "DescendingOrderCheckBox"
+        Me.DescendingOrderCheckBox.Size = New System.Drawing.Size(110, 17)
+        Me.DescendingOrderCheckBox.TabIndex = 5
+        Me.DescendingOrderCheckBox.Text = "Descending order"
+        Me.DescendingOrderCheckBox.UseVisualStyleBackColor = True
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.ColumnNameListBox)
+        Me.GroupBox1.Controls.Add(Me.DescendingOrderCheckBox)
+        Me.GroupBox1.Location = New System.Drawing.Point(12, 28)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(180, 195)
+        Me.GroupBox1.TabIndex = 6
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Sort by"
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.ClientSize = New System.Drawing.Size(783, 278)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.LoadCustomersButton)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "Form1"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form1"
-        Me.ResumeLayout(false)
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        Me.ResumeLayout(False)
 
-End Sub
-
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
+    End Sub
+    Friend WithEvents LoadCustomersButton As Button
+    Friend WithEvents ColumnNameListBox As ListBox
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents DescendingOrderCheckBox As CheckBox
+    Friend WithEvents GroupBox1 As GroupBox
 End Class

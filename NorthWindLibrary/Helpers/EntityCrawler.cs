@@ -20,7 +20,7 @@ namespace NorthWindLibrary.Helpers
         /// </summary>
         public string[] TableNames => _tableNames;
 
-        public string EnityModelName { get; set; }
+        public string EnitityModelName { get; set; }
         /// <summary>
         /// Container for a single entity, columns and keys
         /// </summary>
@@ -39,12 +39,12 @@ namespace NorthWindLibrary.Helpers
         /// </summary>
         public EntityCrawler()
         {
-            EnityModelName = "CodeFirstDatabaseSchema";
+            EnitityModelName = "CodeFirstDatabaseSchema";
         }
 
         public EntityCrawler(string entityModelName)
         {
-            EnityModelName = entityModelName;
+            EnitityModelName = entityModelName;
         }
         /// <summary>
         /// Populate our list
@@ -52,9 +52,9 @@ namespace NorthWindLibrary.Helpers
         public void GetInformation()
         {
             var handle = Activator.CreateInstance(AssembleName, string.Concat(AssembleName, ".", TypeName));
-            var EntitiesObject = (DbContext)handle.Unwrap();
+            var dbContext = (DbContext)handle.Unwrap();
 
-            var objectContext = ((IObjectContextAdapter)EntitiesObject).ObjectContext;
+            var objectContext = ((IObjectContextAdapter)dbContext).ObjectContext;
             var storageMetadata = ((EntityConnection)objectContext.Connection).GetMetadataWorkspace().GetItems(DataSpace.SSpace);
 
             _entityTypesData = (from globalItem in storageMetadata where globalItem.BuiltInTypeKind == BuiltInTypeKind.EntityType
@@ -69,7 +69,7 @@ namespace NorthWindLibrary.Helpers
 
             foreach (string tableName in TableNames)
             {
-                columnNames = GetColumNames(tableName);
+                columnNames = GetColumnNames(tableName);
                 var temp = GetColumnInformation(tableName);
 
                 keyNames = new List<string>();
@@ -102,12 +102,12 @@ namespace NorthWindLibrary.Helpers
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        public List<string> GetColumNames(string tableName)
+        public List<string> GetColumnNames(string tableName)
         {
             var columnNames = new List<string>();
 
             List<ReadOnlyMetadataCollection<EdmProperty>> metaData = (from entityType in _entityTypesData
-                            where entityType.FullName == $"{EnityModelName}.{tableName}"
+                            where entityType.FullName == $"{EnitityModelName}.{tableName}"
                             select entityType.DeclaredProperties).ToList();
 
 
@@ -134,7 +134,7 @@ namespace NorthWindLibrary.Helpers
              * edmx: store
              */
             var metaData = (
-                _entityTypesData.Where(entityType => entityType.FullName == $"{EnityModelName}.{tableName}")
+                _entityTypesData.Where(entityType => entityType.FullName == $"{EnitityModelName}.{tableName}")
                     .Select(entityTypesData => entityTypesData.DeclaredProperties)).ToList();
 
 

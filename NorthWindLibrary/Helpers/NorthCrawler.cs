@@ -13,7 +13,7 @@ namespace NorthWindLibrary.Helpers
         public NorthCrawler()
         {
             Configuration.AssembleName = "";
-            Configuration.EnityModelName = "NorthWindAzureContext";
+            Configuration.EnitityModelName = "NorthWindAzureContext";
             Configuration.TypeName = "NorthWindAzureContext";
         }
 
