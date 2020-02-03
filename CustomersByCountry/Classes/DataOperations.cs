@@ -2,10 +2,10 @@
 using System.Linq;
 using NorthWindLibrary;
 using System.Data.Entity;
-using CustomersByCountry.LanguageExtensions;
+using LambdaEntityFrameWorkInCondition.LanguageExtensions;
 using NorthWindLibrary.PartialClasses;
 
-namespace CustomersByCountry.Classes
+namespace LambdaEntityFrameWorkInCondition.Classes
 {
     public class DataOperations
     {

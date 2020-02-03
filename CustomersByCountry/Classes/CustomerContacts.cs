@@ -1,4 +1,4 @@
-﻿namespace CustomersByCountry.Classes
+﻿namespace LambdaEntityFrameWorkInCondition.Classes
 {
     public class CustomerCountries
     {

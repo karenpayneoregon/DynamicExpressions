@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using NorthWindLibrary.Classes;
 using NorthWindLibrary.PartialClasses;
 
-namespace CustomersByCountry.LanguageExtensions
+namespace LambdaEntityFrameWorkInCondition.LanguageExtensions
 {
     public static class CheckedListBoxExtensions
     {

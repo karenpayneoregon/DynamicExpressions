@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace CustomersByCountry.LanguageExtensions
+namespace LambdaEntityFrameWorkInCondition.LanguageExtensions
 {
     public static class LambdaExpressions
     {

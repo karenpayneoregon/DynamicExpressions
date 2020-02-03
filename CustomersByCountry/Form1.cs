@@ -6,22 +6,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CustomersByCountry.Classes;
-using CustomersByCountry.LanguageExtensions;
+using LambdaEntityFrameWorkInCondition.Classes;
+using LambdaEntityFrameWorkInCondition.LanguageExtensions;
 using NorthWindLibrary;
 
-namespace CustomersByCountry
+namespace LambdaEntityFrameWorkInCondition
 {
     public partial class Form1 : Form
     {
         private readonly NorthOperations _northOperations = new NorthOperations();
+
         public Form1()
         {
             InitializeComponent();
 
             Shown += Form1_Shown;
         }
-
 
         private async void Form1_Shown(object sender, EventArgs e)
         {
@@ -33,6 +33,9 @@ namespace CustomersByCountry
 
             var categories = await _northOperations.GetAllCategories();
             CategoryCheckedListBox.DataSource = categories;
+
+            SelectCountriesButton.Enabled = true;
+            SelectCategoriesButton.Enabled = true;
 
         }
 

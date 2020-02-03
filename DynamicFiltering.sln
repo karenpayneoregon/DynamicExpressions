@@ -17,7 +17,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WindowsApp1", "WindowsApp1\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Basic", "Visual Basic", "{A22D5C43-C4CA-40EE-8A0D-FEAAA160B038}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomersByCountry", "CustomersByCountry\CustomersByCountry.csproj", "{E7EAB203-BB46-4F71-B657-B2DA2C85DB1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LambdaEntityFrameWorkInCondition", "CustomersByCountry\LambdaEntityFrameWorkInCondition.csproj", "{E7EAB203-BB46-4F71-B657-B2DA2C85DB1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

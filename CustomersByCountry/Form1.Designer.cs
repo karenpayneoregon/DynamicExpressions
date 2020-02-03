@@ -1,4 +1,4 @@
-﻿namespace CustomersByCountry
+﻿namespace LambdaEntityFrameWorkInCondition
 {
     partial class Form1
     {
@@ -55,6 +55,7 @@
             // 
             // SelectCountriesButton
             // 
+            this.SelectCountriesButton.Enabled = false;
             this.SelectCountriesButton.Location = new System.Drawing.Point(12, 337);
             this.SelectCountriesButton.Name = "SelectCountriesButton";
             this.SelectCountriesButton.Size = new System.Drawing.Size(172, 23);
@@ -110,6 +111,7 @@
             // 
             // SelectCategoriesButton
             // 
+            this.SelectCategoriesButton.Enabled = false;
             this.SelectCategoriesButton.Location = new System.Drawing.Point(14, 603);
             this.SelectCategoriesButton.Name = "SelectCategoriesButton";
             this.SelectCategoriesButton.Size = new System.Drawing.Size(172, 23);

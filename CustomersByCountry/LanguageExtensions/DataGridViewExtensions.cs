@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace CustomersByCountry.LanguageExtensions
+namespace LambdaEntityFrameWorkInCondition.LanguageExtensions
 {
     public static class DataGridViewExtensions
     {

@@ -216,6 +216,33 @@ namespace NorthWindLibrary
             }
 
         }
+        /// <summary>
+        /// How a developer might try to perform a IN condition yet this
+        /// is hard coded, not suited to work with dynamic values.
+        /// </summary>
+        private void ArticleSample1()
+        {
+            using (var context = new NorthWindAzureContext())
+            {
+                var results = context.Customers.
+                    Where(customer => customer.CountryIdentifier == 8 || 
+                                      customer.CountryIdentifier == 7)
+                    .ToList();
+            }
+        }
+        /// <summary>
+        /// Next attempt, pass in a Nullable Int array of country identifiers
+        /// </summary>
+        /// <param name="countryIdentifiers"></param>
+        private void ArticleSample2(int?[] countryIdentifiers)
+        {
+            using (var context = new NorthWindAzureContext())
+            {
+                var results = context.Customers
+                    .Where(customer => countryIdentifiers.Contains(customer.CountryIdentifier))
+                    .ToList();
+            }
+        }
 
     }
 }

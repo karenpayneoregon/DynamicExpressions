@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E7EAB203-BB46-4F71-B657-B2DA2C85DB1D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>CustomersByCountry</RootNamespace>
-    <AssemblyName>CustomersByCountry</AssemblyName>
+    <RootNamespace>LambdaEntityFrameWorkInCondition</RootNamespace>
+    <AssemblyName>LambdaEntityFrameWorkInCondition</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -80,6 +80,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
